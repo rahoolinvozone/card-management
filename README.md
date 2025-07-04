@@ -39,14 +39,6 @@ Once services are running, access Swagger UI for the Card Management microservic
 ⛔ Stopping the Services
 To stop all running containers:
 
-bash
-Copy
-Edit
 docker-compose down
-yaml
-Copy
-Edit
-
----
 
 Let me know if you'd like a version badge, contribution guide, or deployment section added.
