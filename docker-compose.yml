@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 0EjVhkX649j1
+      POSTGRES_DB: cmsdb
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  card-management:
+    build:
+      context: ./card-management
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/cmsdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 0EjVhkX649j1
+      FRAUD_SERVICE_URL: http://fraud-detection:8081
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  fraud-detection:
+    build:
+      context: ./fraud-detection
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db
+
+
+volumes:
+  postgres_data:
